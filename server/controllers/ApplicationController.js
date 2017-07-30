@@ -1,4 +1,4 @@
-var Application = required('../models/Application');
+var Application = require('../models/Application');
 
 module.exports = {
 	find: function(params, callback){

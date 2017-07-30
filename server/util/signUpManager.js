@@ -1,5 +1,5 @@
-var controller = require('../controller')['User']
+var controller = require('../controllers')['User']
 
-module.export = function(req, res, next){
+module.exports = function(req, res, next){
 	
 }

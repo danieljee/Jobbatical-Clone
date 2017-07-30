@@ -1,4 +1,4 @@
-var Message = required('../models/Message');
+var Message = require('../models/Message');
 
 module.exports = {
 	find: function(params, callback){

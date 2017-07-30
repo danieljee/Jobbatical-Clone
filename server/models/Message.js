@@ -1,4 +1,4 @@
-var mongoose = required('mongoose');
+var mongoose = require('mongoose');
 
 var options = {timestamps:true};
 

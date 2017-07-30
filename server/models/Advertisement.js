@@ -1,4 +1,4 @@
-var mongoose = required('mongoose');
+var mongoose = require('mongoose');
 
 var options = {timestamp: true};
 
@@ -30,7 +30,7 @@ var AdvertisementSchema = new mongoose.Schema({
 	responsibilities:{
 		type: Array,
 		required: true
-	}
+	},
 	requirements: {
 		type:Array,
 		required: true

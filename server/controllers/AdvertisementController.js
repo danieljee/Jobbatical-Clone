@@ -1,4 +1,4 @@
-var Advertisement = required('../models/Advertisement');
+var Advertisement = require('../models/Advertisement');
 
 module.exports = {
 	find: function(params, callback){
