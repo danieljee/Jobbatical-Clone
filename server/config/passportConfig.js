@@ -34,6 +34,35 @@ module.exports = function(passport){
 			});
 		}
 	));
+	
+	passport.use('local-login', new LocalStrategy(
+		{
+			usernameField: "email"
+		},
+		function(email, password, done){
+			controller.findOne({email:email}, function(err, user){
+				if (err){
+					console.log('local login: error')
+					return done(err);
+				}
+				if (!user){
+					return done(null, false, "Non-existing user!");
+				}
+				
+				user.comparePassword(password, function(err, isMatch){
+					if (err){
+						console.log('local login comparePassword: error');
+						return done(err);
+					}
+					if (!isMatch){
+						return done(null, false, 'Invalid email or password!');
+					}
+					return done(null, true);
+				})
+			});
+		}
+	));
+	
 	passport.serializeUser(function(user, done) {
 		done(null, user.id);
 	});

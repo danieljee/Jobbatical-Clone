@@ -13,7 +13,7 @@ var sessionConfig = require('./server/config/sessionConfig');
 var index = require('./server/routes/index');
 
 var app = express();
-//session configuration.
+//SESSION configuration.
 sessionConfig.call(app, db);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

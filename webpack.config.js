@@ -1,6 +1,7 @@
 var webpack = require("webpack");
 var path = require("path");
 
+//a
 const config = {
 	entry: "./client/index.js",
 	output: {

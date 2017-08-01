@@ -37,13 +37,56 @@ module.exports = {
 				}
 				res.json({
 					confirmation: "success",
-					message: "Sign up successful!"
+					result: "Sign up successful!"
 				})
 			})(req, res);
 		})()
 	},
 	
 	login: function(req, res, next){
+		req.checkBody('email', 'Invalid Email').isEmail();
+		req.checkBody('password', 'Password is required').isEmpty();
 		
+		Promise.coroutine(function*(){
+			var errors = yield req.getValidationResult();
+			
+			if (!errors.isEmpty()){
+				res.json({
+					confirmation:"fail",
+					message: errors.array()
+				});
+				return
+			}
+			
+			passport.authenticate('local-login', function(err, success, message){
+				if (err){
+					res.json({
+						confirmation:"fail",
+						message: err
+					});
+					return
+				}
+				if (!success){
+					res.json({
+						confirmation:"fail",
+						message: message
+					});
+					return
+				}
+				res.json({
+					confirmation:"success",
+					result: "Login successful!"
+				});
+			})
+		})();
 	}
 }
+
+
+
+
+
+
+
+
+
