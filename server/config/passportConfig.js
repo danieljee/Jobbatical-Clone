@@ -57,18 +57,22 @@ module.exports = function(passport){
 					if (!isMatch){
 						return done(null, false, 'Invalid email or password!');
 					}
-					return done(null, true);
+					return done(null, user);
 				})
 			});
 		}
 	));
 	
 	passport.serializeUser(function(user, done) {
+		//Here we determine which data of the user object (document) shuold be stored in the session
+		//so that it can be used in deserialization to get user data from db or memory.
+		//user.id is saved to req.session.passport.user
 		done(null, user.id);
 	});
 	passport.deserializeUser(function(id, done) {
 		controller.findById(id, function(err, user) {
 		  done(err, user);
+		  //Here, the user object is attached to req.user
 		});
 	});
 }

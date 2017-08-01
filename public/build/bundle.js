@@ -26724,6 +26724,14 @@ var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _style = __webpack_require__(237);
+
+var _style2 = _interopRequireDefault(_style);
+
+var _APIManager = __webpack_require__(238);
+
+var _APIManager2 = _interopRequireDefault(_APIManager);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26742,9 +26750,69 @@ var Login = function (_React$Component) {
 	}
 
 	_createClass(Login, [{
+		key: 'login',
+		value: function login() {
+			var email = document.getElementById('loginEmail').value;
+			var password = document.getElementById('loginPassword').value;
+			var errors = document.getElementsByClassName('formErrorMessage');
+			for (var i = 0; i < errors.length; i++) {
+				errors[i].style.display = 'none';
+			}
+			/*
+   	Client-side validation here!
+   */
+			_APIManager2.default.post('/login', { email: email, password: password }, function (err, result) {
+				if (err) {
+					//Server-side input validation function will return an array if there are invalid inputs.
+					//So if it's not an array, it will be a simply string message indicating other errors.
+					if (!Array.isArray(err)) {
+						document.getElementById('loginError').style.display = 'block';
+						document.getElementById('loginError').innerHTML = err;
+						return;
+					}
+					for (var _i = 0; _i < err.length; _i++) {
+						var errorMessage = document.getElementById(err[_i].param + 'Error');
+						errorMessage.style.display = 'block';
+						errorMessage.innerHTML = err[_i].msg;
+					}
+					return;
+				}
+
+				//Should server redirect?
+				console.log('login successful!');
+			});
+		}
+	}, {
 		key: 'render',
 		value: function render() {
-			return _react2.default.createElement('div', { className: 'container' });
+			return _react2.default.createElement(
+				'div',
+				{ className: 'container' },
+				_react2.default.createElement(
+					'div',
+					{ style: _style2.default.login, id: 'loginDiv' },
+					_react2.default.createElement(
+						'label',
+						{ htmlFor: 'loginEmail' },
+						'Email'
+					),
+					_react2.default.createElement('div', { className: 'formErrorMessage', id: 'emailError' }),
+					_react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email', id: 'loginEmail' }),
+					_react2.default.createElement(
+						'label',
+						{ htmlFor: 'loginPassword' },
+						'Password'
+					),
+					_react2.default.createElement('div', { className: 'formErrorMessage', id: 'passwordError' }),
+					_react2.default.createElement('input', { type: 'password', className: 'form-control', name: 'password', id: 'loginPassword' }),
+					_react2.default.createElement('div', { className: 'formErrorMessage', id: 'loginError' }),
+					_react2.default.createElement(
+						'button',
+						{ onClick: this.login.bind(this), className: 'btn btn-success' },
+						'Login!'
+					)
+				)
+			);
 		}
 	}]);
 
@@ -26813,8 +26881,9 @@ var Join = function (_React$Component) {
 
 			_APIManager2.default.post('/join', params, function (err, result) {
 				if (err) {
+					//Server-side input validation function will return an array if there are invalid inputs.
+					//So if it's not an array, it will be a simply string message indicating other errors.
 					if (!Array.isArray(err)) {
-						//if the error is simply a message
 						document.getElementById('signUpError').style.display = 'block';
 						document.getElementById('signUpError').innerHTML = err;
 						return;
@@ -26929,6 +26998,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 exports.default = {
+	//Inline style for join form
 	join: {
 		width: 700,
 		margin: 'auto',
@@ -26938,7 +27008,12 @@ exports.default = {
 		lname: {
 			width: 300
 		}
+	},
 
+	//Inline style for login form
+	login: {
+		width: 500,
+		margin: 'auto'
 	}
 };
 

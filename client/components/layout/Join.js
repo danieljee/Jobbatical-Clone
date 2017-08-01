@@ -20,7 +20,9 @@ class Join extends React.Component{
 		
 		APIManager.post('/join', params, function(err, result){
 			if (err){
-				if (!Array.isArray(err)){ //if the error is simply a message
+				//Server-side input validation function will return an array if there are invalid inputs.
+				//So if it's not an array, it will be a simply string message indicating other errors.
+				if (!Array.isArray(err)){
 					document.getElementById('signUpError').style.display = 'block';
 					document.getElementById('signUpError').innerHTML = err;
 					return

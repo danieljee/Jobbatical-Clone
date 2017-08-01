@@ -1,4 +1,5 @@
 export default {
+	//Inline style for join form
 	join:{
 		width:700,
 		margin:'auto',
@@ -8,6 +9,11 @@ export default {
 		lname:{
 			width: 300,
 		},
-		
+	},
+	
+	//Inline style for login form
+	login:{
+		width: 500,
+		margin:'auto'
 	}
 }

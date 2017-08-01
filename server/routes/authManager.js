@@ -45,7 +45,7 @@ module.exports = {
 	
 	login: function(req, res, next){
 		req.checkBody('email', 'Invalid Email').isEmail();
-		req.checkBody('password', 'Password is required').isEmpty();
+		req.checkBody('password', 'Password is required').notEmpty();
 		
 		Promise.coroutine(function*(){
 			var errors = yield req.getValidationResult();
@@ -58,7 +58,7 @@ module.exports = {
 				return
 			}
 			
-			passport.authenticate('local-login', function(err, success, message){
+			passport.authenticate('local-login', function(err, user, message){
 				if (err){
 					res.json({
 						confirmation:"fail",
@@ -66,18 +66,27 @@ module.exports = {
 					});
 					return
 				}
-				if (!success){
+				if (!user){
 					res.json({
 						confirmation:"fail",
 						message: message
 					});
 					return
 				}
-				res.json({
-					confirmation:"success",
-					result: "Login successful!"
-				});
-			})
+				req.login(user, function(err){ //When you are implementing custom callback to passport.authenticate, you must explicitly call req.login.
+					if (err){
+						res.json({
+							confirmation:"fail",
+							message: "Login detail could not be verified. Try again."
+						});
+						return
+					}	
+					res.json({
+						confirmation:"success",
+						result: "Login successful!"
+					});
+				});		
+			})(req,res,next);
 		})();
 	}
 }
