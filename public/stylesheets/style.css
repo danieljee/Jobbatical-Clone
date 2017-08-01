@@ -2,3 +2,7 @@ input {
 	height: 70px;
 	border-radius:0;
 }
+
+.formErrorMessage{
+	color: #ff0000;
+}

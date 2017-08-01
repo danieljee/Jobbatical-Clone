@@ -5,6 +5,14 @@ var bcrypt = require('bcrypt-nodejs');
 var options = {timestamps: true, discriminatorKey: 'type'};
 
 var UserSchema = new mongoose.Schema({
+	firstName:{
+		type:String,
+		required: true
+	},
+	lastName:{
+		type:String,
+		required:true
+	},
 	email: {
 		type: String,
 		unique: true,
@@ -16,7 +24,6 @@ var UserSchema = new mongoose.Schema({
 	},
 	location: {
 		type: String,
-		required: true
 	},
 	role:{
 		type: String,
