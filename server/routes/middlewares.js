@@ -11,7 +11,10 @@ const variables = function(req, res, next){
 	This middleware will be used to redirect unauthenticated users if they are trying to access services that are only allowed for authenticated users.
 */
 const loggedIn = function(req, res, next){
-	req.isAuthenticated()? next(): res.redirect('/');
+	console.log('loggedin')
+	console.log(req.user)
+	console.log(req.session.passport.user)
+	req.isAuthenticated()? next(): res.redirect('/login');
 }
 
 /*

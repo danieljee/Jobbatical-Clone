@@ -6,7 +6,8 @@ class Join extends React.Component{
 	
 	signUp(){
 		//need client-side validation
-		var params = { //would put this in the component state. Later in redux store.
+		//would put this in the component state.
+		var params = { 
 			firstName: document.getElementById('firstName').value,
 			lastName: document.getElementById('lastName').value,
 			email: document.getElementById('email').value,

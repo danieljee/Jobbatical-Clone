@@ -20,7 +20,6 @@ var UserSchema = new mongoose.Schema({
 	},
 	password: {
 		type: String,
-		required: true
 	},
 	location: {
 		type: String,
@@ -36,9 +35,14 @@ options);
 /*
 	User schemas configuration
 */
+
+//retainKeyOrder: true
+UserSchema.set('toObject', { getters: true});
+
 UserSchema.pre('save', function(next){
 	const user = this, SALT_FACTOR = 5;
 	
+	if (!user.password){next();} //Password is not required when signing up with facebook or google.
 	if (!user.isModified('password')) return next();
 	
 	bcrypt.genSalt(SALT_FACTOR, function(err, salt){

@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var dburl = "mongodb://localhost/jobbaticalClone";
+var dburl = "mongodb://127.0.0.1/jobbaticalClone";
 
 module.exports = function(){
 	mongoose.connect(dburl, function(err){

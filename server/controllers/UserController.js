@@ -1,74 +1,63 @@
 var User = require('../models/User');
 
 module.exports = {
-	find: function(params, callback){
-		User.find(params, function(err, result){
-			if (err){
-				callback(err, null);
-				return
-			}
-			callback(null, result);
+	find: function(params){
+		return new Promise(function(resolve, reject){
+			User.find(params, function(err, result){
+				err ? reject(err): resolve(result);
+			})
+		});
+	},
+	
+	findOne: function(param){
+		return new Promise(function(resolve, reject){
+			User.findOne(param, function(err, user){
+				console.log(param)
+				console.log('findone')
+				console.log(user);
+				err ? reject(err):resolve(user)
+			});
+		});
+	},
+	
+	findById: function(id){
+		return new Promise(function(resolve, reject){
+			User.findById(id, function(err, result){
+				(err)? reject(err): resolve(result);
+			})
 		})
 	},
 	
-	findOne: function(param, callback){
-		User.findOne(param, function(err, user){
-			if (err){
-				callback(err, null)
-				return
-			}
-			callback(null, user);
+	create: function(params){
+		return new Promise(function(resolve, reject){
+			User.create(params, function(err, result){
+				(err)? reject(err): resolve(result);
+			});
 		});
 	},
 	
-	findById: function(id, callback){
-		User.findById(id, function(err, result){
-			if (err){
-				callback(err, null);
-				return
-			}
-			callback(null, result);
-		});
+	deleteById: function(id){
+		return new Promise(function(resolve, reject){
+			User.findByIdAndRemove(id, function(err, result){
+				(err)? reject(err): resolve(result);
+			});
+		})
 	},
 	
-	create: function(params, callback){
-		User.create(params, function(err, result){
-			if (err){
-				callback(err, null);
-				return
-			}
-			callback(null, result);
-		});
+	delete: function(params){
+		return new Promise(params, function(err, result){
+			User.remove(params, function(err, result){
+				(err)? reject(err):resolve(result);
+			})
+		})
 	},
 	
-	deleteById: function(id, callback){
-		User.findByIdAndRemove(id, function(err, result){
-			if (err){
-				callback(err, null);
-				return
-			}
-			callback(null, result);
-		});
-	},
-	
-	delete: function(params, callback){
-		User.remove(params, function(err, result){
-			if (err){
-				callback(err, null);
-				return
-			}
-			callback(null, result);
-		});
-	},
-	
-	update: function(id, params, callback){
-		User.findByIdAndUpdate(id, params, function(err, result){
-			if (err){
-				callback(err, null);
-				return
-			}
-			callback(null, result);
-		});
+	update: function(id, params){
+		return new Promise(function(resolve, reject){
+			User.findByIdAndUpdate(id, params, function(err, result){
+				(err)? reject(err): resolve(result);
+			});
+		})
 	}
 }
 

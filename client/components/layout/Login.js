@@ -3,7 +3,7 @@ import style from '../../util/style'
 import APIManager from '../../util/APIManager'
 
 class Login extends React.Component{
-	
+
 	login(){
 		var email = document.getElementById('loginEmail').value;
 		var password = document.getElementById('loginPassword').value;
@@ -40,14 +40,18 @@ class Login extends React.Component{
 		return(
 			<div className='container'>
 				<div style={style.login} id='loginDiv'>
-					<label htmlFor='loginEmail'>Email</label>
-					<div className='formErrorMessage' id='emailError'></div>
-					<input type='text' className='form-control' name='email' id='loginEmail'/>
-					<label htmlFor='loginPassword'>Password</label>
-					<div className='formErrorMessage' id='passwordError'></div>
-					<input type='password' className='form-control' name='password' id='loginPassword'/>
-					<div className='formErrorMessage' id='loginError'></div>
-					<button onClick={this.login.bind(this)} className='btn btn-success'>Login!</button>
+						<a href='/auth/facebook'>Login with Facebook</a>
+						<button className='btn btn-default'>Login with Google</button>
+
+						<label htmlFor='loginEmail'>Email</label>
+						<div className='formErrorMessage' id='emailError'></div>
+						<input type='text' className='form-control' name='email' id='loginEmail'/>
+						<label htmlFor='loginPassword'>Password</label>
+						<div className='formErrorMessage' id='passwordError'></div>
+						<input type='password' className='form-control' name='password' id='loginPassword'/>
+						<div className='formErrorMessage' id='loginError'></div>
+						<button onClick={this.login.bind(this)} className='btn btn-success'>Login!</button>
+
 				</div>
 			</div>
 		)
