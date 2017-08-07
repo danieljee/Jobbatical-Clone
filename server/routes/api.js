@@ -1,15 +1,7 @@
 var controllers = require('../controllers')
-	,	express = require('express')
-	,	middlewares = require('../middlewares')
-	,	router = express.Router();
+	,	middlewares = require('../middlewares');
 
-module.exports = function(){
-	router.get('/currentUser', function(req, res){
-		res.json({
-			confirmation:'success',
-			result: req.user
-		});
-	});
+module.exports = function apiRoute(router){
 	router.post('/:resource', middlewares.loggedIn, function(req, res){
 			var resource = req.params.resource;
 			var controller = controllers[resource];
@@ -21,7 +13,7 @@ module.exports = function(){
 				});
 				return;
 			}
-
+			//req and res should be passed to controller. Controller should handle all the logic?
 			controller.create(req.body, function(err, result){
 				if (err){
 					res.json({

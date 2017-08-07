@@ -4,16 +4,14 @@ var express = require('express')
 	,	logger = require('morgan')
 	,	cookieParser = require('cookie-parser')
 	,	bodyParser = require('body-parser')
-	,	mongoose = require('mongoose')
 	,	expressValidator = require('express-validator')
 	,	sassMiddleware = require('node-sass-middleware')
-	,	session = require('express-session')
 	,	passport = require('passport')
 	,	db = require('./server/config/dbConfig')()
-	,	passportConfig = require('./server/config/passportConfig')(passport)
 	,	sessionConfig = require('./server/config/sessionConfig')
-	,	index = require('./server/routes/index')
 	,	app = express();
+require('./server/routes')(app);//setup routes
+require('./server/config/passportConfig')(passport);
 //SESSION configuration. Changes name of the cookie to make it harder for hackers to find our server type
 sessionConfig.call(app, db);
 // view engine setup
@@ -31,11 +29,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(sassMiddleware({
 	src:path.join(__dirname, 'client/sass'),
 	dest:path.join(__dirname, 'public/stylesheets')
-}))
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(expressValidator());
-app.use('/', index);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
