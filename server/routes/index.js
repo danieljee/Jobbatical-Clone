@@ -2,7 +2,7 @@ var express = require('express')
 	,	serverSideRendering = require('../serverSideRendering')
 	,	routes = require('require-dir')() //Get an object of all the dirname within cwd.
 	,	mainRouter = express.Router();
-module.exports = function(app){
+
 	Object.keys(routes).forEach(function(routeName){
 		console.log('route name: ' + routeName);
 		var router = express.Router(); //create a router for each route
@@ -17,5 +17,4 @@ module.exports = function(app){
 		res.render('index', {content: markUp});
 	});
 
-	app.use('/', mainRouter);
-};
+	export default mainRouter;

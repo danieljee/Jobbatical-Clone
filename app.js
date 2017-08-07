@@ -7,10 +7,11 @@ var express = require('express')
 	,	expressValidator = require('express-validator')
 	,	sassMiddleware = require('node-sass-middleware')
 	,	passport = require('passport')
+	,	router = require('./server/routes')
 	,	db = require('./server/config/dbConfig')()
 	,	sessionConfig = require('./server/config/sessionConfig')
 	,	app = express();
-require('./server/routes')(app);//setup routes
+
 require('./server/config/passportConfig')(passport);
 //SESSION configuration. Changes name of the cookie to make it harder for hackers to find our server type
 sessionConfig.call(app, db);
@@ -33,7 +34,7 @@ app.use(sassMiddleware({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(expressValidator());
-
+app.use('/', router);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
