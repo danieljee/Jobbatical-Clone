@@ -41,7 +41,7 @@ class Login extends React.Component{
 			<div className='container'>
 				<div style={style.login} id='loginDiv'>
 						<a href='/auth/facebook'>Login with Facebook</a>
-						<button className='btn btn-default'>Login with Google</button>
+						<a href='/auth/google'>Login with Google</a>
 
 						<label htmlFor='loginEmail'>Email</label>
 						<div className='formErrorMessage' id='emailError'></div>

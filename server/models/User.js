@@ -24,6 +24,14 @@ var UserSchema = new mongoose.Schema({
 	location: {
 		type: String,
 	},
+	facebookID: {
+		type: String,
+		default: null
+	},
+	googleID: {
+		type:String,
+		default: null
+	},
 	role:{
 		type: String,
 		enum: ['Member', 'Admin'],
@@ -36,7 +44,7 @@ options);
 	User schemas configuration
 */
 
-//retainKeyOrder: true
+//
 UserSchema.set('toObject', { getters: true});
 
 UserSchema.pre('save', function(next){

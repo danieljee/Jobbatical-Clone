@@ -1,70 +1,69 @@
-var controllers = require('../controllers');
-var passport = require('passport');
-var express = require('express');
-var middlewares = require('./middlewares')
-var router = express.Router();
+var controllers = require('../controllers')
+	,	express = require('express')
+	,	middlewares = require('../middlewares')
+	,	router = express.Router();
 
 module.exports = function(){
-	router.get('/currentUser', function(req, res, next){
+	router.get('/currentUser', function(req, res){
 		res.json({
 			confirmation:'success',
 			result: req.user
-		})
+		});
 	});
-	router.post('/:resource', middlewares.loggedIn, function(req, res, next){
+	router.post('/:resource', middlewares.loggedIn, function(req, res){
 			var resource = req.params.resource;
 			var controller = controllers[resource];
-			
+
 			if (!controller){
 				res.json({
-					confirmation:"fail",
-					message: "Invalid resource type"
+					confirmation:'fail',
+					message: 'Invalid resource type'
 				});
-				return
+				return;
 			}
 
 			controller.create(req.body, function(err, result){
 				if (err){
 					res.json({
-						confirmation:"fail",
+						confirmation:'fail',
 						message: err
 					});
-					return
+					return;
 				}
-				
+
 				res.json({
-					confirmation:"success",
+					confirmation:'success',
 					result: result
 				});
 			});
-		})
-		
-	router.get('/:resource', function(req, res, next){
+		});
+
+	router.get('/:resource', function(req, res){
 		var resource = req.params.resource;
 		var controller = controllers[resource];
-		
+
 		if (!controller){
 			res.json({
-				confirmation:"fail",
-				message: "Invalid resource type"
+				confirmation:'fail',
+				message: 'Invalid resource type'
 			});
-			return
+			return;
 		}
-		
+
 		controller.find({}, function(err, result){
 			if (err){
 				res.json({
-					confirmation: "fail",
+					confirmation: 'fail',
 					message: err
 				});
-				return
+				return;
 			}
 			res.json({
-				confirmation: "success",
+				confirmation: 'success',
 				result: result
-			})
+			});
 		});
-	})
-	
+	});
+
 	return router;
-}
+};

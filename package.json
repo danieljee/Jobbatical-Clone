@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "nodemon --exec babel-node ./bin/www --ignore public/",
+    "dev": "webpack -wd"
   },
   "dependencies": {
     "axios": "^0.16.2",
@@ -13,16 +14,19 @@
     "connect-mongo": "^1.3.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
+    "ejs": "^2.5.7",
     "express": "~4.15.2",
     "express-session": "^1.15.4",
     "express-validator": "^3.2.1",
-    "hjs": "~0.0.6",
     "jsonwebtoken": "^7.4.1",
     "mongoose": "^4.11.4",
     "morgan": "~1.8.1",
+    "node-sass-middleware": "^0.11.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
+    "passport-google-oauth20": "^1.0.0",
     "passport-local": "^1.0.0",
+    "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",
@@ -31,10 +35,16 @@
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
+    "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
+    "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "eslint": "^4.4.0",
+    "eslint-plugin-react": "^7.1.0",
+    "nodemon": "^1.11.0",
     "webpack": "^3.0.0"
   }
 }

@@ -1,25 +1,24 @@
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
 var config = require('./oAuthConfig');
 var Promise = require('bluebird');
-var jwt = require('jsonwebtoken');
-var controller = require('../controllers')['User'];
+var controller = require('../controllers/UserController');
 
 /*
-	Here, we define all of our passport strategies. 
-	"done" is the callback function when we use one of these strategies. 
+	Here, we define all of our passport strategies.
+	"done" is the callback function when we use one of these strategies.
 */
 
+/*
+	Protocol flow of OAuth2
+	ref: https://tools.ietf.org/html/rfc6749#section-1.2
+	1. When user is routed to /auth/facebook, he/she is directed to facebook authorization service for them to provide Authorization grant. Once user do/do not allows, they are redirected to /auth/facebook/callback. The redirect url will have an authorization code as a parameter
+	2. We now have the authorization grant. We authenticate with facebook and use this authorization grant to request for an Access token. Access token is a string representing the authorization. It represents specific scopes and duration of access.
+	3. We are issued an access token. We then setup user account if not exists, and setup sessions.
 
-
-function addJWT(user){
-	const token = jwt.sign({email:user.email}, config.jwtSecret, {
-		expiresIn: 60000
-	});
-
-	return Object.assign({}, user.toObject(), {token});
-}
-
+	4. We can use the access token from now on to request resources from facebook.
+*/
 module.exports = function(passport){
 	passport.use(new FacebookStrategy(
 		{
@@ -37,27 +36,52 @@ module.exports = function(passport){
 							email: profile.emails[0].value,
 							firstName: profile.name.givenName,
 							lastName: profile.name.familyName,
+							facebookID: profile.id
 						};
-						
+
 						user = yield controller.create(newUser);
 					}
-					
-					const userWithToken = addJWT(user);
+					var userWithToken = Object.assign({}, user.toObject(), {token: accessToken});
 					done(null, userWithToken)
 				}
 			});
-			// process.nextTick(function(){
-				
-				// return done(null, profile);
-			// })
-			
+
 			findOrCreateUser();
 		}
 	));
-	
+
+	passport.use(new GoogleStrategy(
+		{
+			clientID: config.google.clientID,
+			clientSecret: config.google.clientSecret,
+			callbackURL: config.google.callbackURL,
+		},
+		function(accessToken, refreshToken, profile, done){
+			var findOrCreateUser = Promise.coroutine(function*(){
+				if (profile){
+					let user = yield controller.findOne({email:profile.emails[0].value});
+					if (!user){
+						let newUser = {
+							email: profile.emails[0].value,
+							firstName: profile.name.givenName,
+							lastName: profile.name.familyName,
+							googleID: profile.id
+						};
+
+						user = yield controller.create(newUser);
+					}
+					var userWithToken = Object.assign({}, user.toObject(), {token: accessToken});
+					done(null, userWithToken)
+				}
+			});
+
+			findOrCreateUser();
+		}
+	));
+
 	passport.use('local-signup', new LocalStrategy(
 		{
-			passReqToCallback: true,  //This option enables us to pass req to the callback. 
+			passReqToCallback: true,  //This option enables us to pass req to the callback.
 			usernameField: "email"
 		},
 		function(req, email, password, done){
@@ -73,12 +97,12 @@ module.exports = function(passport){
 					return done(null, result);
 				})
 				.catch(function(err){
-					console.log(err); 
+					console.log(err);
 					return done(err)
 				});
 		}
 	));
-	
+
 	passport.use('local-login', new LocalStrategy(
 		{
 			usernameField: "email"
@@ -105,15 +129,17 @@ module.exports = function(passport){
 				})
 		}
 	));
-	
+
+	//Here we determine what be stored in the session store (mongodb)
+	//We will store user document ID and token?
+	//req.session.passport.user will be the object {id, token}
 	passport.serializeUser(function(user, done) {
-		//Here we determine which data of the user object (document) shuold be stored in the session
-		//so that it can be used in deserialization to get user data from db or memory.
-		//user.id is saved to req.session.passport.user
-		done(null, {id: user.id, token: user.token});
+		done(null, {id: user.id, token:user.token});
 	});
-	passport.deserializeUser(function(user, done) {
-		controller.findById(user.id)
+
+	//Here, we will get the user data from user model and assign it to req.user
+	passport.deserializeUser(function(userIdAndToken, done) {
+		controller.findById(userIdAndToken.id)
 			.then(function(user){
 				done(null, user);
 			})

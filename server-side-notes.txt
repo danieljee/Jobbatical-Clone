@@ -1,0 +1,8 @@
+1. Assume that the api is hosted on another server.
+  Access it using a http request
+  
+3. Use server side rendering. It is good for SEO and performance. It still renders the app even if client side js is disabled
+
+4. In order to support full ES5 features and jsx, I need to transpile server side code with babel-loader.
+  Install babel-node and create .babelrc file.
+  Setup the script to run "nodemon --exec babel-node server.js --ignore public/"
