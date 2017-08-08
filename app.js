@@ -5,7 +5,6 @@ var express = require('express')
 	,	cookieParser = require('cookie-parser')
 	,	bodyParser = require('body-parser')
 	,	expressValidator = require('express-validator')
-	,	sassMiddleware = require('node-sass-middleware')
 	,	passport = require('passport')
 	,	router = require('./server/routes')
 	,	db = require('./server/config/dbConfig')()
@@ -27,10 +26,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(sassMiddleware({
-	src:path.join(__dirname, 'client/sass'),
-	dest:path.join(__dirname, 'public/stylesheets')
-}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(expressValidator());

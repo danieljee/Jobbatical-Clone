@@ -42,7 +42,7 @@ module.exports = function(passport){
 						user = yield controller.create(newUser);
 					}
 					var userWithToken = Object.assign({}, user.toObject(), {token: accessToken});
-					done(null, userWithToken)
+					done(null, userWithToken);
 				}
 			});
 
@@ -71,7 +71,7 @@ module.exports = function(passport){
 						user = yield controller.create(newUser);
 					}
 					var userWithToken = Object.assign({}, user.toObject(), {token: accessToken});
-					done(null, userWithToken)
+					done(null, userWithToken);
 				}
 			});
 
@@ -82,36 +82,34 @@ module.exports = function(passport){
 	passport.use('local-signup', new LocalStrategy(
 		{
 			passReqToCallback: true,  //This option enables us to pass req to the callback.
-			usernameField: "email"
+			usernameField: 'email'
 		},
 		function(req, email, password, done){
 			controller.findOne({email:email})
 				.then(function(user){
 					if(user){
-						console.log("local signup: user exists")
-						return done(null, false, "User already exists!");
+						return done(null, false, 'User already exists!');
 					}
-					return controller.create({firstName: req.body.firstName, lastName:req.body.lastName, email:email, password:password})
+					return controller.create({firstName: req.body.firstName, lastName:req.body.lastName, email:email, password:password});
 				})
 				.then(function(result){
 					return done(null, result);
 				})
 				.catch(function(err){
-					console.log(err);
-					return done(err)
+					return done(err);
 				});
 		}
 	));
 
 	passport.use('local-login', new LocalStrategy(
 		{
-			usernameField: "email"
+			usernameField: 'email'
 		},
 		function(email, password, done){
 			controller.findOne({email:email})
 				.then(function(user){
 					if (!user){
-						return done(null, false, "Non-existing user!");
+						return done(null, false, 'Non-existing user');
 					}
 					user.comparePassword(password, function(err, isMatch){
 						if (err){
@@ -122,11 +120,11 @@ module.exports = function(passport){
 							return done(null, false, 'Invalid email or password!');
 						}
 						return done(null, user);
-					})
+					});
 				})
 				.catch(function(err){
-					return done(err)
-				})
+					return done(err);
+				});
 		}
 	));
 
@@ -145,6 +143,6 @@ module.exports = function(passport){
 			})
 			.catch(function(err){
 				done(err);
-			})
+			});
 	});
-}
+};
