@@ -2,58 +2,29 @@ var User = require('../models/User');
 
 module.exports = {
 	find: function(params){
-		return new Promise(function(resolve, reject){
-			User.find(params, function(err, result){
-				err ? reject(err): resolve(result);
-			});
-		});
+		return User.find(params).exec();
 	},
 
 	findOne: function(param){
-		return new Promise(function(resolve, reject){
-			User.findOne(param, function(err, user){
-				err ? reject(err):resolve(user);
-			});
-		});
+		return User.findOne(param).exec();
 	},
-
 	findById: function(id){
-		return new Promise(function(resolve, reject){
-			User.findById(id, function(err, result){
-				(err)? reject(err): resolve(result);
-			});
-		});
+		return User.findById(id).exec();
 	},
 
 	create: function(params){
-		return new Promise(function(resolve, reject){
-			User.create(params, function(err, result){
-				(err)? reject(err): resolve(result);
-			});
-		});
+		return User.create(params).exec();
 	},
 
 	deleteById: function(id){
-		return new Promise(function(resolve, reject){
-			User.findByIdAndRemove(id, function(err, result){
-				(err)? reject(err): resolve(result);
-			});
-		});
+		return User.findByIdAndRemove(id).exec();
 	},
 
 	delete: function(params){
-		return new Promise(function(resolve, reject){
-			User.remove(params, function(err, result){
-				(err)? reject(err):resolve(result);
-			});
-		});
+		return User.remove(params).exec();
 	},
 
 	update: function(id, params){
-		return new Promise(function(resolve, reject){
-			User.findByIdAndUpdate(id, params, function(err, result){
-				(err)? reject(err): resolve(result);
-			});
-		});
+		return User.findByIdAndUpdate(id, params).exec();
 	}
 };

@@ -1,8 +1,30 @@
 1. Assume that the api is hosted on another server.
   Access it using a http request
-  
+
 3. Use server side rendering. It is good for SEO and performance. It still renders the app even if client side js is disabled
 
 4. In order to support full ES5 features and jsx, I need to transpile server side code with babel-loader.
   Install babel-node and create .babelrc file.
   Setup the script to run "nodemon --exec babel-node server.js --ignore public/"
+
+
+5. Server structure
+
+Candidate 1:
+  /config - config files
+  /routes - One file per route (/join, /login, /api). Expose REST api to the browser through /api route.
+            Implements route handling here. Most of the business logic resides here.
+  /models - One file per resource (user, advertisement, application)
+  /controllers - Simple interface between route handlers and model. Interact directly with the model.
+  /middlewares - middlewares that handles request before being passed to route handlers
+
+Candidate 2:
+  /config - config files
+  /routes - One file per route. Expost REST api to the browser through each individual resource route (/advertisement, /application).
+            Import the respective controller for route handling. Add route specific middlewares from /middlewares
+  /models - One file per resource (user, advertisement, application)
+  /controllers - One file per resource (advert, application) or action (login, join). Doesn't talk directly to the models. Retrieves data
+                using one of the services in /service and handles logic and http responses.
+  /service - Simple interface between route handlers and model. This will allow loose-coupling so that database can be changed
+                      without the controllers being affected.
+  /middlewares - middlewares that handles request before being passed to controllers
