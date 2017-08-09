@@ -2,7 +2,7 @@ var	Promise = require('bluebird')
 	, passport = require('passport');
 
 module.exports = {
-	signUp: function(req, res, next){
+	signUp: function(req, res){
 		req.checkBody('firstName', 'First name is required (letters only)').isAlpha();
 		req.checkBody('lastName', 'Last name is required (letters only)').isAlpha();
 		req.checkBody('email', 'Invalid Email').isEmail();
@@ -39,7 +39,10 @@ module.exports = {
 					});
 					return;
 				}
-				next();
+				res.json({
+					confirmation: 'success',
+					result: 'Sign up successful!'
+				});
 			})(req, res);
 		})();
 	},
@@ -47,7 +50,6 @@ module.exports = {
 	login: function(req, res, next){
 		req.checkBody('email', 'Invalid Email').isEmail();
 		req.checkBody('password', 'Password is required').notEmpty();
-
 		Promise.coroutine(function*(){
 			var errors = yield req.getValidationResult();
 
@@ -82,7 +84,10 @@ module.exports = {
 						});
 						return;
 					}
-					next();
+					res.json({
+						confirmation:'success',
+						result: 'Login successful!'
+					});
 				});
 			})(req,res,next);
 		})();

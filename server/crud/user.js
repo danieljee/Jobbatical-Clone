@@ -13,7 +13,7 @@ module.exports = {
 	},
 
 	create: function(params){
-		return User.create(params).exec();
+		return User.create(params);
 	},
 
 	deleteById: function(id){
