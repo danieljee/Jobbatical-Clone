@@ -30,18 +30,18 @@ class Login extends React.Component{
 				}
 				return
 			}
-			
+
 			//Should server redirect?
 			console.log('login successful!');
 		});
 	}
-	
+
 	render(){
 		return(
 			<div className='container'>
 				<div style={style.login} id='loginDiv'>
-						<a href='/auth/facebook'>Login with Facebook</a>
-						<a href='/auth/google'>Login with Google</a>
+						<a href='/oAuth/facebook'>Login with Facebook</a>
+						<a href='/oAuth/google'>Login with Google</a>
 
 						<label htmlFor='loginEmail'>Email</label>
 						<div className='formErrorMessage' id='emailError'></div>
