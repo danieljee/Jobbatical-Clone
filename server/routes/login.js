@@ -1,15 +1,10 @@
-var authMiddleware = require('../middlewares/authMiddleware')
+var authController = require('../controllers/authController')
   , middlewares = require('../middlewares');
 
 module.exports = function loginRoute(router){
   router.all('/', middlewares.notLoggedIn);
-  router.post('/', authMiddleware.login, function(req, res){
-    console.log('POST to login working');
-    res.json({
-      confirmation:'success',
-      result: 'Login successful!'
-    });
-  });
+  router.post('/', authController.login);
+  //necessary?
   router.get('/', function(req, res, next){
     next();
   });

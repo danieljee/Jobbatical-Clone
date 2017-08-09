@@ -24,7 +24,7 @@ Candidate 2:
             Import the respective controller for route handling. Add route specific middlewares from /middlewares
   /models - One file per resource (user, advertisement, application)
   /controllers - One file per resource (advert, application) or action (login, join). Doesn't talk directly to the models. Retrieves data
-                using one of the services in /service and handles logic and http responses.
-  /service - Simple interface between route handlers and model. This will allow loose-coupling so that database can be changed
+                using one of the services in /crud and handles logic and http responses.
+  /crud - Simple interface between route handlers and model. This will allow loose-coupling so that database can be changed
                       without the controllers being affected.
   /middlewares - middlewares that handles request before being passed to controllers
