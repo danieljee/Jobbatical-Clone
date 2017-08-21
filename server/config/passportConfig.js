@@ -1,7 +1,7 @@
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
-var config = require('./oAuthConfig');
+var config = require('./index');
 var Promise = require('bluebird');
 //change this
 var controller = require('../crud')['user'];
@@ -41,8 +41,6 @@ module.exports = function(passport){
 						};
 
 						user = yield controller.create(newUser);
-					} else {
-						done(null, false, 'User already exists!');
 					}
 					var userWithToken = Object.assign({}, user.toObject(), {token: accessToken});
 					done(null, userWithToken);
@@ -72,8 +70,6 @@ module.exports = function(passport){
 						};
 
 						user = yield controller.create(newUser);
-					} else {
-						done(null, false, 'User already exists!');
 					}
 					var userWithToken = Object.assign({}, user.toObject(), {token: accessToken});
 					done(null, userWithToken);

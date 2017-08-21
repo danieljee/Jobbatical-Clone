@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon --exec babel-node ./bin/www --ignore public/",
+    "start": "nodemon --exec babel-node app.js --ignore public/",
     "dev": "webpack -wd"
   },
   "dependencies": {
@@ -12,7 +12,9 @@
     "bluebird": "^3.5.0",
     "body-parser": "~1.17.1",
     "connect-mongo": "^1.3.2",
+    "cookie": "^0.3.1",
     "cookie-parser": "~1.4.3",
+    "cookie-signature": "^1.0.6",
     "debug": "~2.6.3",
     "ejs": "^2.5.7",
     "express": "~4.15.2",
@@ -31,7 +33,10 @@
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
     "require-dir": "^0.3.2",
-    "serve-favicon": "~2.4.2"
+    "serve-favicon": "~2.4.2",
+    "socket.io": "^2.0.3",
+    "socket.io-client": "^2.0.3",
+    "ws": "^3.1.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

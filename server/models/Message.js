@@ -16,6 +16,6 @@ var MessageSchema = new mongoose.Schema({
 		required: true
 	}
 },
-options)
+options);
 
 module.exports = mongoose.model('Message', MessageSchema);

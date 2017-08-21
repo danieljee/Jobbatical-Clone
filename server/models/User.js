@@ -49,10 +49,10 @@ UserSchema.set('toObject', { getters: true});
 
 UserSchema.pre('save', function(next){
 	const user = this, SALT_FACTOR = 5;
-	
+
 	if (!user.password){next();} //Password is not required when signing up with facebook or google.
 	if (!user.isModified('password')) return next();
-	
+
 	bcrypt.genSalt(SALT_FACTOR, function(err, salt){
 		if (err) return next(err);
 		bcrypt.hash(user.password, salt, null, function(err, hash){
@@ -76,7 +76,7 @@ var User = mongoose.model('User', UserSchema);
 	Company specific details
 */
 var CompanySchema = User.discriminator('Company', new mongoose.Schema({
-	name: {
+	companyName: {
 		type: String,
 		required: true
 	},
@@ -90,14 +90,7 @@ var CompanySchema = User.discriminator('Company', new mongoose.Schema({
 	Applicants specific details
 */
 var ApplicantSchema = User.discriminator('Applicant', new mongoose.Schema({
-	firstName: {
-		type:String,
-		required: true
-	},
-	lastName: {
-		type:String,
-		required:true
-	},
+	//Possibly add nested properties. 
 	skills: {
 		type: Array,
 	},
@@ -110,10 +103,3 @@ var ApplicantSchema = User.discriminator('Applicant', new mongoose.Schema({
 }));
 
 module.exports = User
-
-
-
-
-
-
-

@@ -18,11 +18,17 @@ const loggedIn = function(req, res, next){
 	This middleware will be used to redirect users if they are 'Logged in' but trying to access services for users that are not logged in.
 */
 const notLoggedIn = function(req, res, next){
+	console.log('notloggedin');
 	!req.isAuthenticated()? next(): res.redirect('/');
+};
+
+const isAdmin = function(req, res, next){
+	(!req.isAuthenticated() || req.user.role	!= 'Admin') ? res.redirect('/') : next();
 };
 
 module.exports = {
 	variables: variables,
 	loggedIn: loggedIn,
-	notLoggedIn: notLoggedIn
+	notLoggedIn: notLoggedIn,
+	isAdmin: isAdmin
 };

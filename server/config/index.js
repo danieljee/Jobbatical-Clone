@@ -1,11 +1,5 @@
-const env = process.env;
+const env = process.env.NODE_ENV || 'development';
 
-export const nodeENV = env.NODE_ENV || 'development';
+//When hosting on the server, set NODE_ENV as production so that appropriate port, host and urls are set.
 
-export default {
-  port: env.PORT || 3000,
-  host: env.HOST || '127.0.0.1',
-  get serverURL(){
-    return `http://${this.host}:${this.port}`;
-  }
-};
+module.exports = require('./config.'+ env);
