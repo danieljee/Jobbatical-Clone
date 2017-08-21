@@ -4,6 +4,7 @@ module.exports = {
   getResources: function(req, res){
     var resource = req.params.resource;
     var db = crud[resource];
+    console.log('in getRources ', resource);
     if (!db){
       res.json({
         confirmation:'fail',

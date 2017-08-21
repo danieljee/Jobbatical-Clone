@@ -9,8 +9,10 @@ var express = require('express')
 	,	router = require('./server/routes')
 	,	db = require('./server/config/dbConfig')()
 	,	sessionConfig = require('./server/config/sessionConfig')
+	,   setupController = require('./server/controllers/setupController')
 	,	app = express();
 
+   
 require('./server/config/passportConfig')(passport);
 //SESSION configuration. Changes name of the cookie to make it harder for hackers to find our server type
 sessionConfig.call(app, db);
