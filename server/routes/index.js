@@ -7,6 +7,7 @@ Object.keys(routes).forEach(function(routeName){
 	var router = express.Router(); //create a router for each route
 	require(`./${routeName}`)(router);
 	mainRouter.use('/'+routeName, router);
+	console.log('Route: ', routeName);
 });
 
 mainRouter.get('*', function(req, res) {

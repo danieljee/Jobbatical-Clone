@@ -1,5 +1,6 @@
 var Advertisement = require('../models/Advertisement');
 
+console.log('Advertisement does this get called');
 module.exports = {
 	find: function(params, callback){
 		Advertisement.find(params, function(err, result){

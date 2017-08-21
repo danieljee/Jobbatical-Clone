@@ -12,6 +12,7 @@ const variables = function(req, res, next){
 */
 const loggedIn = function(req, res, next){
 	req.isAuthenticated()? next(): res.redirect('/login');
+	console.log('Logged In');
 };
 
 /*
@@ -20,6 +21,7 @@ const loggedIn = function(req, res, next){
 const notLoggedIn = function(req, res, next){
 	console.log('notloggedin');
 	!req.isAuthenticated()? next(): res.redirect('/');
+	console.log('Not logged In');
 };
 
 const isAdmin = function(req, res, next){
