@@ -8,6 +8,6 @@ module.exports = function(){
 			throw new Error('DB connection failed: ' + err);
 		}
 		console.log('DB connection successful url: ' + dburl);
-	});
+	}); 
 	return mongoose.connection;
 };

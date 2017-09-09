@@ -1,73 +1,47 @@
 var Application = require('../models/Application');
 
 module.exports = {
-	find: function(params, callback){
-		Application.find(params, function(err, result){
-			if (err){
-				callback(err, null);
-				return
-			}
-			callback(null, result);
-		});
+
+	find: function(params){
+
+		return Application.find(params);
+
 	},
-	
-	findOne: function(param, callback){
-		Application.findOne(param, function(err, user){
-			if (err){
-				callback(err, null)
-				return
-			}
-			callback(null, user);
-		});
+
+	findOne: function(param){
+
+		return Application.findOne(param);
+
 	},
-	
-	findById: function(id, callback){
-		Application.findById(id, function(err, result){
-			if (err){
-				callback(err, null);
-				return
-			}
-			callback(null, result);
-		});
+
+	findById: function(id){
+
+		return Application.findById(id);
+
 	},
-	
-	create: function(params, callback){
-		Application.create(params, function(err, result){
-			if (err){
-				callback(err, null);
-				return
-			}
-			callback(null, result);
-		});
+
+	create: function(params){
+
+		return Application.create(params);
+
 	},
-	
-	deleteById: function(id, callback){
-		Application.findByIdAndRemove(id, function(err, result){
-			if (err){
-				callback(err, null);
-				return
-			}
-			callback(null, result);
-		});
+
+	deleteById: function(id){
+
+		return Application.findByIdAndRemove(id);
+
 	},
-	
-	delete: function(params, callback){
-		Application.remove(params, function(err, result){
-			if (err){
-				callback(err, null);
-				return
-			}
-			callback(null, result);
-		});
+
+	delete: function(params){
+
+		return Application.remove(params);
+
 	},
-	
-	update: function(id, params, callback){
-		Application.findByIdAndUpdate(id, params, function(err, result){
-			if (err){
-				callback(err, null);
-				return
-			}
-			callback(null, result);
-		});
+
+	update: function(id, params){
+
+		return Application.findByIdAndUpdate(id, params);
+
 	}
+
 }
